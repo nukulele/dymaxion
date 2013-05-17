@@ -1,0 +1,12 @@
+.DS_Store*
+*.aux
+*.db
+*.dvi
+*.log
+*.o
+*.pyc
+*.so
+*.tar
+*.zip
+*~
+settings_local.py
