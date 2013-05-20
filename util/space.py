@@ -18,11 +18,26 @@ def rot_y( zangle ):
 
 def rot_z( angle ):
     return Matrix([[cos(angle),-sin(angle),0],[sin(angle),cos(angle),0],[0,0,1]])
+
+def vector_3d( x, y, z ):
+    return Matrix( (x,y,z) ).transpose()
     
 # ---- some matrix manipulations
 # a = Matrix( (1,2,3) )
 # b = Matrix( (3,4,5) )
 # a-b, a+b, a.dot(b), a.cross(b)
+
+class Line( object ):
+
+    def set_params( self, params_list ):
+        
+        '''definition of a line in 3-space, p0 + tv for real t'''
+        self.p0, self.v = params_list
+
+def two_point_line( p0, p1 ):
+    ret_line = Line()
+    ret_line.set_params( (p0, p1-p0 ) )
+    return ret_line
 
 class Plane( object ):
     
@@ -31,10 +46,10 @@ class Plane( object ):
     def set_params( self, params_list ):
         self.A, self.B, self.C, self.D = params_list
         
-    def __unicode__( self ):
-        return "I'm a plane!"
-        
-def plane_from_points( p0, p1, p2 ):
+    def normal( self ):
+        return vector_3d( self.A, self.B, self.C )
+
+def three_point_plane( p0, p1, p2 ):
     # check for types, raise if bad?
     
     e1 = p1-p0
@@ -47,3 +62,16 @@ def plane_from_points( p0, p1, p2 ):
     ret_plane = Plane()
     ret_plane.set_params( (normal[0], normal[1], normal[2], d) )
     return ret_plane
+    
+def line_plane_intersect( line, plane ):
+
+    if type( line ) != Line:
+        raise ValueError
+    if type( plane ) != Plane:
+        raise ValueError
+        
+    n = plane.normal()
+    t = ( plane.D - n.dot( line.p0 )) / n.dot( line.v )
+    return line.p0 + t * line.v
+        
+        
