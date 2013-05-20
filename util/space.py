@@ -27,27 +27,34 @@ def vector_3d( x, y, z ):
 # b = Matrix( (3,4,5) )
 # a-b, a+b, a.dot(b), a.cross(b)
 
-class Line( object ):
+class Line( object, paramslist = ( vector_3d( 0,0,0 ), vector_3d( 0,0,0 ) ) ):
 
-    def set_params( self, params_list ):
-        
-        '''definition of a line in 3-space, p0 + tv for real t'''
+    '''definition of a line in 3-space, p0 + tv for real t'''
+
+    def __init__( self, params_list ):
         self.p0, self.v = params_list
+        
+    # is_valid (i.e. is self.v zero )
 
 def two_point_line( p0, p1 ):
-    ret_line = Line()
-    ret_line.set_params( (p0, p1-p0 ) )
-    return ret_line
+    return Line( ( p0, p1-p0 ) )
 
-class Plane( object ):
+class Plane( object, params_list = ( 0, 0, 0, 0 ) ):
     
     '''Definition of a plane in 3-space, stored in the form Ax+By+Cz+D=0'''
     
-    def set_params( self, params_list ):
+    def __init__( self, params_list ):
         self.A, self.B, self.C, self.D = params_list
         
     def normal( self ):
         return vector_3d( self.A, self.B, self.C )
+
+    def is_valid( self ):
+        return not( self.A == 0 and self.B == 0 and self.C == 0 )
+
+    # is_valid
+    # distance_to_point
+
 
 def three_point_plane( p0, p1, p2 ):
     # check for types, raise if bad?
@@ -55,13 +62,10 @@ def three_point_plane( p0, p1, p2 ):
     e1 = p1-p0
     e2 = p2-p1
     normal = e1.cross(e2)
-    # check for degenerate case! normal == 0?
     
     d = p0.dot( normal )
     
-    ret_plane = Plane()
-    ret_plane.set_params( (normal[0], normal[1], normal[2], d) )
-    return ret_plane
+    return Plane( (normal[0], normal[1], normal[2], d) )
     
 def line_plane_intersect( line, plane ):
 
