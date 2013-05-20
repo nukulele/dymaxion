@@ -28,8 +28,11 @@ class Plane( object ):
     
     '''Definition of a plane in 3-space, stored in the form Ax+By+Cz+D=0'''
     
-    def set_params( self, params_list )
+    def set_params( self, params_list ):
         self.A, self.B, self.C, self.D = params_list
+        
+    def __unicode__( self ):
+        return "I'm a plane!"
         
 def plane_from_points( p0, p1, p2 ):
     # check for types, raise if bad?
@@ -37,9 +40,10 @@ def plane_from_points( p0, p1, p2 ):
     e1 = p1-p0
     e2 = p2-p1
     normal = e1.cross(e2)
-    # check for degenerate case!
+    # check for degenerate case! normal == 0?
     
-    # solve for D
+    d = p0.dot( normal )
+    
     ret_plane = Plane()
-    ret_plane.set_params( normal[0], normal[1], normal[2], 4 )
+    ret_plane.set_params( (normal[0], normal[1], normal[2], d) )
     return ret_plane
