@@ -63,6 +63,9 @@ class Plane( object ):
     def distance_to_point( self, point ):
         n = self.normal()
         return ( n.dot( point ) + self.D ) / sqrt( sum( [x*x for x in n] ) )
+        
+    def contains_point( self, point ):
+        return self.distance_to_point( point ) == 0
 
 
 def three_point_plane( p0, p1, p2 ):
