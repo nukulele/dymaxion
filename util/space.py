@@ -1,8 +1,16 @@
 #! /usr/bin/python
 
+# -----------------------------------------------------------------
+# Do something about exceptions and verifying types and degenerate
+# cases
+# -----------------------------------------------------------------
+
 from sympy.matrices import Matrix
 from sympy import sin, cos, sqrt
 from sympy import pi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# exceptions
 
 class WrongMathObject( Exception ):
     pass
@@ -10,11 +18,17 @@ class WrongMathObject( Exception ):
 class ObjectDegenerateCase( Exception ):
     pass
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# angle measure conversions
+
 def to_rad( angle ):
     return angle * pi / 180
     
 def to_deg( angle ):
     return angle * 180 / pi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# rotation matrices
 
 def rot_x( angle ):
     return Matrix([[1,0,0],[0,cos(angle),-sin(angle)],[0,sin(angle),cos(angle)]])
@@ -25,16 +39,18 @@ def rot_y( zangle ):
 def rot_z( angle ):
     return Matrix([[cos(angle),-sin(angle),0],[sin(angle),cos(angle),0],[0,0,1]])
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# shortcut for making 3D vectors
+
 def vector_3d( x, y, z ):
     return Matrix( (x,y,z) ).transpose()
     
 zero_3d = vector_3d( 0,0,0 )
     
-# ---- some matrix manipulations
-# a = Matrix( (1,2,3) )
-# b = Matrix( (3,4,5) )
-# a-b, a+b, a.dot(b), a.cross(b)
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Line
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    
 class Line( object ):
 
     '''definition of a line in 3-space, p0 + tv for real t'''
@@ -43,9 +59,11 @@ class Line( object ):
         self.p0, self.v = params_list
         
     # is_valid (i.e. is self.v zero )
+    # contains_point( self, point )
 
-def two_point_line( p0, p1 ):
-    return Line( ( p0, p1-p0 ) )
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Plane
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 class Plane( object ):
     
@@ -66,32 +84,23 @@ class Plane( object ):
         
     def contains_point( self, point ):
         return self.distance_to_point( point ) == 0
-
+    
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# geometric utilities
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        
+def two_point_line( p0, p1 ):
+    return Line( ( p0, p1-p0 ) )
 
 def three_point_plane( p0, p1, p2 ):
-
-    # degenerates everywhere!
-
     e1 = p1-p0
     e2 = p2-p1
     normal = e1.cross(e2)
-    
     d = p0.dot( normal )
-    
-    return Plane( (normal[0], normal[1], normal[2], -d) )
-    
+    return Plane( (normal[0], normal[1], normal[2], -d) )    
+ 
 def line_plane_intersect( line, plane ):
-
-    # if type( line ) != Line:
-    #    raise WrongMathObject
-    # if type( plane ) != Plane:
-    #    raise WrongMathObject
-        
     n = plane.normal()
-    
-    # if n.dot( line.v ) == 0:
-    #    raise ObjectDegenerateCase
-    
     t = ( plane.D - n.dot( line.p0 )) / n.dot( line.v )
     return line.p0 + t * line.v
         
