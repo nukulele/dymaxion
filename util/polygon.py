@@ -8,10 +8,10 @@ class Polygon( object ):
 
     def __init__( self, vertices = list(), precalculate = False ):
         self.normal = None
+        self.vertices = vertices
         if precalculate:
-            # pre-calculate normal, edges, edge normals
-            pass    
-        
+            self._precalculate()
+            
     def _precalculate( self ):
         
         num_vertices = len( self.vertices )
@@ -21,17 +21,25 @@ class Polygon( object ):
         vert_list.append( vert_list[0] )
         
         # calculate the polygon normal
-        plane = three_point_plane( vert_list[0], vert_list[1], vert_list[2] )
-        self.normal = vector_3d( plane.A, plane.B, plane.C )
+        self.plane = three_point_plane( vert_list[0], vert_list[1], vert_list[2] )
+        self.normal = self.plane.normal
         
         # calculate the (directed) edges
         self.edges = list()
         self.edge_normals = list()
         for x in range( num_vertices ):
             self.edges.append( two_point_line( vert_list[x], vert_list[x+1] ) )
-            # self.edge_normals.append( ... )            
+            self.edge_normals.append( self.edges[x].v.cross( self.normal ) )            
         
         
-    # contains_point
+    def contains_point( self, point ):
+        if self.plane.distance_to_point( point ) != 0:
+            return False
+        for index in range( len( self.vertices ) ):
+            if self.edge_normals[index].dot( point ) > \
+                    self.edge_normals[index].dot( self.vertices[index] ):
+                return False
+        return True
+        
 
     

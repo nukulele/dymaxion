@@ -71,16 +71,15 @@ class Plane( object ):
     
     def __init__( self, params_list = (0,0,0,0) ):
         self.A, self.B, self.C, self.D = params_list
-        
-    def normal( self ):
-        return vector_3d( self.A, self.B, self.C )
+        self.normal = vector_3d( self.A, self.B, self.C )
+        self.norm_length = sqrt( self.normal.dot( self.normal ) )
 
     def is_valid( self ):
-        return not( (self.A, self.B, self.C) == (0,0,0) )
+        return not( self.normal == zero_3d )
 
     def distance_to_point( self, point ):
-        n = self.normal()
-        return ( n.dot( point ) + self.D ) / sqrt( sum( [x*x for x in n] ) )
+        n = self.normal
+        return ( n.dot( point ) + self.D ) / self.norm_length 
         
     def contains_point( self, point ):
         return self.distance_to_point( point ) == 0
@@ -100,7 +99,7 @@ def three_point_plane( p0, p1, p2 ):
     return Plane( (normal[0], normal[1], normal[2], -d) )    
  
 def line_plane_intersect( line, plane ):
-    n = plane.normal()
+    n = plane.normal
     t = ( plane.D - n.dot( line.p0 )) / n.dot( line.v )
     return line.p0 + t * line.v
         
@@ -110,5 +109,5 @@ def line_plane_intersect( line, plane ):
 
 a = vector_3d( 1,0,0 )
 b = vector_3d( 0,1,0 )
-c = vector_3d( 0,0,1 )
+c = vector_3d( 1,1,0 )
 P = three_point_plane( a,b,c )
