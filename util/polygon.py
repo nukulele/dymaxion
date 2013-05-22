@@ -2,6 +2,9 @@ from util.space import Line, Plane
 from util.space import vector_3d, zero_3d
 from util.space import two_point_line, three_point_plane, line_plane_intersect
 
+class InvalidPolygon( Exception ):
+    pass
+
 class Polygon( object ):
 
     # contains: list of vertices, list of edges (lines), polygon normal, list of edge normals
@@ -15,7 +18,8 @@ class Polygon( object ):
     def _precalculate( self ):
         
         num_vertices = len( self.vertices )
-        # if n < 3, puke
+        if num_vertices < 3:
+            raise InvalidPolygon
 
         vert_list = list( self.vertices )
         vert_list.append( vert_list[0] )
@@ -30,8 +34,7 @@ class Polygon( object ):
         for x in range( num_vertices ):
             self.edges.append( two_point_line( vert_list[x], vert_list[x+1] ) )
             self.edge_normals.append( self.edges[x].v.cross( self.normal ) )            
-        
-        
+                
     def contains_point( self, point ):
         if self.plane.distance_to_point( point ) != 0:
             return False

@@ -15,7 +15,10 @@ from sympy import pi
 class WrongMathObject( Exception ):
     pass
 
-class ObjectDegenerateCase( Exception ):
+class LineInvalid( Exception ):
+    pass
+
+class PlaneInvalid( Exception ):
     pass
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
