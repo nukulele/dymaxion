@@ -106,11 +106,3 @@ def line_plane_intersect( line, plane ):
     t = ( plane.D - n.dot( line.p0 )) / n.dot( line.v )
     return line.p0 + t * line.v
         
-# --------------------------------------------------
-
-# tired of typing these!
-
-a = vector_3d( 1,0,0 )
-b = vector_3d( 0,1,0 )
-c = vector_3d( 1,1,0 )
-P = three_point_plane( a,b,c )

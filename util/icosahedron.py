@@ -10,9 +10,9 @@ from sympy import GoldenRatio, Rational
 class Icosahedron( object ):
 
     def __init__( self ):
-        pass
+        self._set_vertices()
        
-    def set_vertices( self ):
+    def _set_vertices( self ):
         half = Rational(1,2)
         half_phi = (GoldenRatio / 2)
         self.vertices = ( 
@@ -30,7 +30,7 @@ class Icosahedron( object ):
             vector_3d( half, -half_phi, 0 )
             )
             
-    def precalculate_faces( self ):
+    def make_faces( self ):
         self.faces = (
             Polygon( ( self.vertices[0], self.vertices[1], self.vertices[2]), precalculate=True ),
             Polygon( ( self.vertices[0], self.vertices[2], self.vertices[3]), precalculate=True ),
@@ -56,3 +56,6 @@ class Icosahedron( object ):
             Polygon( ( self.vertices[9], self.vertices[11], self.vertices[10]), precalculate=True ),
             Polygon( ( self.vertices[10], self.vertices[11], self.vertices[7]), precalculate=True )
         )
+
+    def rotate_vertices( self, rot_matrix ):
+        self.vertices = [v.multiply( rot_matrix ) for v in self.vertices]
