@@ -20,6 +20,7 @@ class Polygon( object ):
         num_vertices = len( self.vertices )
         if num_vertices < 3:
             raise InvalidPolygon
+            # we don't check for planarity
 
         vert_list = list( self.vertices )
         vert_list.append( vert_list[0] )
@@ -36,7 +37,7 @@ class Polygon( object ):
             self.edge_normals.append( self.edges[x].v.cross( self.normal ) )            
                 
     def contains_point( self, point ):
-        if self.plane.distance_to_point( point ) != 0:
+        if abs( self.plane.distance_to_point( point ).evalf() ) > self.plane.epsilon:
             return False
         for index in range( len( self.vertices ) ):
             if self.edge_normals[index].dot( point ) > \
