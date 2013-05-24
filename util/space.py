@@ -115,10 +115,11 @@ def three_point_plane( p0, p1, p2 ):
     d = p0.dot( normal )
     return Plane( normal[0], normal[1], normal[2], -d )    
  
-def line_plane_intersect( line, plane ):
+def line_plane_intersect( line, plane, ray=False ):
     n = plane.normal
     if n.dot( line.v ) == 0:
         raise NoInterceptError
     t = ( -plane.D - n.dot( line.p0 )) / n.dot( line.v )
+    if ray and t < 0:
+        raise NoInterceptError  
     return line.p0 + t * line.v
-        
