@@ -39,7 +39,7 @@ def to_deg( angle ):
 def rot_x( angle ):
     return Matrix([[1,0,0],[0,cos(angle),-sin(angle)],[0,sin(angle),cos(angle)]])
     
-def rot_y( zangle ):
+def rot_y( angle ):
     return Matrix([[cos(angle),0,sin(angle)],[0,1,0],[-sin(angle),0,cos(angle)]])
 
 def rot_z( angle ):
@@ -52,6 +52,9 @@ def vector_3d( x, y, z ):
     return Matrix( (x,y,z) ).transpose()
     
 zero_3d = vector_3d( 0,0,0 )
+v_x = vector_3d( 1,0,0 )
+v_y = vector_3d( 0,1,0 )
+v_z = vector_3d( 0,0,1 )
     
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Line
@@ -65,7 +68,7 @@ class Line( object ):
         self.p0, self.v = ( p0, v )
         
     def is_valid( self ):
-        return not ( v == zero_3d )
+        return not ( self.v == zero_3d )
         
     # contains_point( self, point )
 
@@ -104,7 +107,7 @@ class Plane( object ):
 def two_point_line( p0, p1 ):
     if p0 == p1:
         raise LineInvalidError
-    return Line( ( p0, p1-p0 ) )
+    return Line( p0, p1-p0 )
 
 def three_point_plane( p0, p1, p2 ):
     e1 = p1-p0

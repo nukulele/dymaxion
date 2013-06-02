@@ -9,9 +9,10 @@ class Polygon( object ):
 
     # contains: list of vertices, list of edges (lines), polygon normal, list of edge normals
 
-    def __init__( self, vertices = list(), precalculate = False ):
+    def __init__( self, vertices = list(), precalculate = True, name = None ):
         self.normal = None
         self.vertices = vertices
+        self.name = name
         if precalculate:
             self._precalculate()
             
@@ -37,12 +38,13 @@ class Polygon( object ):
             self.edge_normals.append( self.edges[x].v.cross( self.normal ) )            
                 
     def contains_point( self, point ):
-        if abs( self.plane.distance_to_point( point ).evalf() ) > self.plane.epsilon:
-            return False
+        # if abs( self.plane.distance_to_point( point ).evalf() ) > self.plane.epsilon:
+        #    return False
         for index in range( len( self.vertices ) ):
-            if self.edge_normals[index].dot( point ) > \
+            if self.edge_normals[index].dot( point ) <= \
                     self.edge_normals[index].dot( self.vertices[index] ):
                 return False
+        print( "hi" )
         return True
         
 
