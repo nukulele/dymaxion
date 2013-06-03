@@ -9,8 +9,12 @@ from util.space import NoInterceptError
 from sympy import GoldenRatio, Rational
 
 class Hedron( object ):
-    def __init__( self ):
+
+    def __init__( self, numeric = False ):
         self._set_vertices()
+        if numeric:
+            float_verts = [v.evalf() for v in self.vertices]
+            self.vertices = float_verts
         
     def _set_vertices( self ):
         pass
@@ -21,12 +25,14 @@ class Hedron( object ):
     def face_hit( self, line ):
         # returns the polygon that a given line hits
         for face in self.faces:
+            # print "face", face.name, face.vertices
             try: 
                 intersect = line_plane_intersect( line, face.plane, ray=True )
                 if face.contains_point( intersect ):
-                    print( intersect.evalf() )
+                    print( face.name, intersect.evalf(), face.normal )
                     pass
             except NoInterceptError:
+            #    print "no intercept"
                 continue
 
 class Tetrahedron( Hedron ):
@@ -52,6 +58,8 @@ class Icosahedron( Hedron ):
     def _set_vertices( self ):
         half = Rational(1,2)
         half_phi = (GoldenRatio / 2)
+        # half = .5
+        # half_phi = (GoldenRatio / 2).evalf()
         self.vertices = ( 
             vector_3d( -half, half_phi, 0 ),
             vector_3d( half, half_phi, 0 ),

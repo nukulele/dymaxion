@@ -1,7 +1,6 @@
-import sympy as s
 import unittest
 
-from util.space import vector_3d, v_x, v_y, v_z
+from util.space import v_x, v_y, v_z
 from util.polygon import *
 
 class TestPolygonConstruction( unittest.TestCase ):
@@ -15,12 +14,12 @@ class TestPolygonConstruction( unittest.TestCase ):
     def test_poly_normal_1( self ):
         '''make sure normal is correct and oriented properly'''
         poly = Polygon( ( v_x, v_y, v_z ) )
-        self.assertEqual( poly.normal, vector_3d(1,1,1) )
+        self.assertEqual( poly.normal, v_x + v_y + v_z )
         
     def test_poly_normal_2( self ):
         '''make sure normal is reversed for polygon facing other way'''
         poly = Polygon( ( v_z, v_y, v_x ) )
-        self.assertEqual( poly.normal, vector_3d(-1,-1,-1) )
+        self.assertEqual( poly.normal, -v_x - v_y - v_z )
         
     def test_precalculateds( self ):
         '''test the precalculated values for accuracy'''
@@ -34,7 +33,7 @@ class TestPolygonConstruction( unittest.TestCase ):
         self.assertEqual( poly.edges[2].p0, zero_3d )
         self.assertEqual( poly.edges[2].v, v_x )
         # edge normals
-        self.assertEqual( poly.edge_normals[2], vector_3d( 0,-1, 0 ) )
+        self.assertEqual( poly.edge_normals[2], -v_y )
         
     def test_contains_point( self ):
         '''Check to see whether points are inside or outside the polygon'''    
