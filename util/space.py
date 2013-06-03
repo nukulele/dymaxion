@@ -2,7 +2,6 @@
 
 # -----------------------------------------------------------------
 # Do something about verifying types
-# Do something about exceptions on degenerate cases
 # -----------------------------------------------------------------
 
 from sympy.matrices import Matrix
@@ -123,6 +122,6 @@ def line_plane_intersect( line, plane, ray=False ):
     if n.dot( line.v ) == 0:
         raise NoInterceptError
     t = ( -plane.D - n.dot( line.p0 )) / n.dot( line.v )
-    if ray and t < 0:
+    if ray and line.v.dot( plane.normal ) > 0:
         raise NoInterceptError  
     return line.p0 + t * line.v

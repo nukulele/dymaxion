@@ -1,9 +1,7 @@
 import sympy as s
 import unittest
 
-from polygon import Polygon
 from util.space import *
-
 
 class TestAngleConversions( unittest.TestCase ):
 
@@ -67,12 +65,14 @@ class TestLine( unittest.TestCase ):
         self.assertFalse( test_line.is_valid() )
         
     def test_two_point_line_good( self ):
+        '''p1 != p2 should make valid line'''
         a = vector_3d( 1,2,3 )
         b = vector_3d( 2,3,4 )
         test_line = two_point_line( a, b )
         self.assertTrue( test_line.is_valid() )
 
     def test_two_point_line_bad( self ):
+        '''p0==p1 should throw LineInvalidError'''
         a = vector_3d( 1,2,3 )
         b = vector_3d( 1,2,3 )
         try:
@@ -103,7 +103,8 @@ class TestPlane( unittest.TestCase ):
             -s.sqrt(3)/3)
         self.assertEqual( test_plane.distance_to_point( vector_3d( 1,1,1 ) ), \
             2*s.sqrt(3)/3)
-
+        self.assertEqual( test_plane.distance_to_point( vector_3d( 0,0,1 ) ), 0 )
+            
     def test_three_point_plane_bad( self ):
         try:
             test_plane = three_point_plane( \
@@ -112,5 +113,49 @@ class TestPlane( unittest.TestCase ):
         except PlaneInvalidError:
             self.assertTrue( True )
             
+            
+class TestLinePlaneIntersect( unittest.TestCase ):
+
+    def test_line_plane_1( self ):
+        test_plane = three_point_plane( v_x, v_y, v_z )
+        test_line = two_point_line( zero_3d, vector_3d( 5,5,5 ) )
+        self.assertEqual( line_plane_intersect( test_line, test_plane ), \
+            vector_3d( s.Rational(1,3), s.Rational(1,3),s.Rational(1,3) ))
+            
+    def test_line_plane_2( self ):
+        '''throw NoInterceptError when line is parallel to plane'''
+        test_plane = three_point_plane( v_x, v_y, v_z )
+        test_line = two_point_line( v_x, v_y )
+        try:
+            line_plane_intersect( test_line, test_plane )
+            self.assertFalse( True )
+        except NoInterceptError:
+            self.assertTrue( True )
+             
+    def test_line_plane_3a( self ):
+        '''intersect okay for ray in right direction'''
+        test_plane = three_point_plane( v_x, v_y, v_z )
+        test_line = two_point_line( vector_3d( 5,5,5 ), vector_3d( -5,-5,-5 ) )
+        self.assertEqual( line_plane_intersect( test_line, test_plane, ray=True ), \
+            vector_3d( s.Rational(1,3), s.Rational(1,3),s.Rational(1,3) ))    
+            
+    def test_line_plane_3b( self ):
+        '''throw NoInterceptError for ray in wrong direction'''
+        test_plane = three_point_plane( v_x, v_y, v_z )
+        test_line = two_point_line( vector_3d( -5,-5,-5 ), vector_3d( 5,5,5 ) )
+        try:
+            line_plane_intersect( test_line, test_plane, ray=True )
+            self.assertFalse( True )
+        except NoInterceptError:
+            self.assertTrue( True )     
+            
+    def test_line_plane_3c( self ):
+        '''no exception for ray in wrong direction with ray=False'''
+        test_plane = three_point_plane( v_x, v_y, v_z )
+        test_line = two_point_line( vector_3d( -5,-5,-5 ), vector_3d( 5,5,5 ) )
+        self.assertEqual( line_plane_intersect( test_line, test_plane ), \
+            vector_3d( s.Rational(1,3), s.Rational(1,3),s.Rational(1,3) ))    
+
+
 if __name__ == '__main__':
     unittest.main()

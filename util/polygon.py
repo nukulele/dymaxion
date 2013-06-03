@@ -38,13 +38,12 @@ class Polygon( object ):
             self.edge_normals.append( self.edges[x].v.cross( self.normal ) )            
                 
     def contains_point( self, point ):
-        # if abs( self.plane.distance_to_point( point ).evalf() ) > self.plane.epsilon:
-        #    return False
+        if abs( self.plane.distance_to_point( point ).evalf() ) > self.plane.epsilon:
+            return False
         for index in range( len( self.vertices ) ):
-            if self.edge_normals[index].dot( point ) <= \
+            if self.edge_normals[index].dot( point ) > \
                     self.edge_normals[index].dot( self.vertices[index] ):
                 return False
-        print( "hi" )
         return True
         
 
