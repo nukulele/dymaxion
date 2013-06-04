@@ -28,6 +28,7 @@ def _icosahedron_mapping( ):
         
     ret_dict = dict()
     ret_dict['a'] = ( rot_x( s.pi/2 ), 0.5, (th*7)/3 )
+    ret_dict['e'] = ( rot_x( 0 ), 0.5, (th*5)/3 )
     return ret_dict
     
     
