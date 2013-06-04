@@ -2,7 +2,8 @@ import sympy as s
 import unittest
 
 from util.polyhedron import *
-from util.space import zero_3d, v_x, v_y, v_z, two_point_line
+from util.space import zero_3d, v_x, v_y, v_z
+from util.space import two_point_line
 from util.space import rot_x, rot_y, rot_z
 
 class TestPolyhedron( unittest.TestCase ):

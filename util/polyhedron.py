@@ -29,8 +29,7 @@ class Hedron( object ):
             try: 
                 intersect = line_plane_intersect( line, face.plane, ray=True )
                 if face.contains_point( intersect ):
-#                    ret_list.append( (face.name, intersect, face.normal) )
-                    ret_list.append( (face.name, face.normal) )
+                    ret_list.append( (face.name, intersect ) )
                     pass
             except NoInterceptError:
                 continue
