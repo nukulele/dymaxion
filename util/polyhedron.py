@@ -80,10 +80,10 @@ class Cube( Hedron ):
 class Icosahedron( Hedron ):
 
     def _set_vertices( self ):
-        # half = Rational(1,2)
-        # half_phi = (GoldenRatio / 2)
-        half = .5
-        half_phi = (GoldenRatio / 2).evalf()
+        half = Rational(1,2)
+        half_phi = (GoldenRatio / 2)
+        # half = .5
+        # half_phi = (GoldenRatio / 2).evalf()
         self.vertices = ( 
             vector_3d( -half, half_phi, 0 ),
             vector_3d( half, half_phi, 0 ),
