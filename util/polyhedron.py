@@ -34,7 +34,6 @@ class Hedron( object ):
                     pass
             except NoInterceptError:
                 continue
-        print ret_list
         return ret_list
 
 class Tetrahedron( Hedron ):

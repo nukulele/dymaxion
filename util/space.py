@@ -80,7 +80,7 @@ class Plane( object ):
     '''Definition of a plane in 3-space, stored in the form Ax+By+Cz+D=0'''
     
     def __init__( self, a = 0, b = 0, c = 0, d = 0 ):
-        self.epsilon = 1e-50
+        self.epsilon = 1e-08
         self.A, self.B, self.C, self.D = [ a,b,c,d ]
         self.normal = vector_3d( self.A, self.B, self.C )
         self.norm_length = sqrt( self.normal.dot( self.normal ) )
@@ -109,6 +109,8 @@ def two_point_line( p0, p1 ):
     return Line( p0, p1-p0 )
 
 def three_point_plane( p0, p1, p2 ):
+    if p0==p1 or p1==p2 or p0==p2:
+        raise PlaneInvalidError
     e1 = p1-p0
     e2 = p2-p1
     normal = e1.cross(e2)
@@ -121,7 +123,7 @@ def line_plane_intersect( line, plane, ray=False ):
     n = plane.normal
     if n.dot( line.v ) == 0:
         raise NoInterceptError
-    t = ( -plane.D - n.dot( line.p0 )) / n.dot( line.v )
     if ray and line.v.dot( plane.normal ) > 0:
         raise NoInterceptError  
+    t = ( -plane.D - n.dot( line.p0 )) / n.dot( line.v )
     return line.p0 + t * line.v
