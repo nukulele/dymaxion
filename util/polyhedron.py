@@ -23,17 +23,19 @@ class Hedron( object ):
         self.vertices = [v.multiply( rot_matrix ) for v in self.vertices]
 
     def face_hit( self, line ):
-        # returns the polygon that a given line hits
+    
+        ret_list = list()
         for face in self.faces:
-            # print "face", face.name, face.vertices
             try: 
                 intersect = line_plane_intersect( line, face.plane, ray=True )
                 if face.contains_point( intersect ):
-                    print( face.name, intersect.evalf(), face.normal )
+#                    ret_list.append( (face.name, intersect, face.normal) )
+                    ret_list.append( (face.name, face.normal) )
                     pass
             except NoInterceptError:
-            #    print "no intercept"
                 continue
+        print ret_list
+        return ret_list
 
 class Tetrahedron( Hedron ):
     
@@ -53,13 +55,37 @@ class Tetrahedron( Hedron ):
             Polygon( ( self.vertices[2], self.vertices[1], self.vertices[3]), name="d" ),
         )            
 
+class Cube( Hedron ):
+    
+    def _set_vertices( self ):
+        self.vertices = (
+            vector_3d( -1,-1,-1 ),
+            vector_3d( -1,-1,1 ),
+            vector_3d( -1,1,-1 ),
+            vector_3d( -1,1,1 ),
+            vector_3d( 1,-1,-1 ),
+            vector_3d( 1,-1,1 ),
+            vector_3d( 1,1,-1 ),
+            vector_3d( 1,1,1 ),
+        )
+        
+    def make_faces( self ):
+        self.faces = (
+            Polygon( ( self.vertices[1], self.vertices[5], self.vertices[7], self.vertices[3]), name="a" ),
+            Polygon( ( self.vertices[4], self.vertices[6], self.vertices[7], self.vertices[5]), name="b" ),
+            Polygon( ( self.vertices[2], self.vertices[3], self.vertices[7], self.vertices[6]), name="c" ),
+            Polygon( ( self.vertices[0], self.vertices[2], self.vertices[6], self.vertices[4]), name="d" ),
+            Polygon( ( self.vertices[0], self.vertices[4], self.vertices[5], self.vertices[1]), name="e" ),
+            Polygon( ( self.vertices[0], self.vertices[1], self.vertices[3], self.vertices[2]), name="f" ),
+        )            
+
 class Icosahedron( Hedron ):
 
     def _set_vertices( self ):
-        half = Rational(1,2)
-        half_phi = (GoldenRatio / 2)
-        # half = .5
-        # half_phi = (GoldenRatio / 2).evalf()
+        # half = Rational(1,2)
+        # half_phi = (GoldenRatio / 2)
+        half = .5
+        half_phi = (GoldenRatio / 2).evalf()
         self.vertices = ( 
             vector_3d( -half, half_phi, 0 ),
             vector_3d( half, half_phi, 0 ),
