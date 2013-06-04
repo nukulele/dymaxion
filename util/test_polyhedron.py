@@ -17,9 +17,11 @@ class TestPolyhedron( unittest.TestCase ):
             
     def test_cube_hits( self ):
         d6 = Icosahedron( numeric = True )
-        d6.rotate_vertices( rot_x( s.atan2( s.GoldenRatio-1, s.GoldenRatio ).evalf() ) )
+        d6.rotate_vertices( rot_x( -s.atan2( s.GoldenRatio-1, s.GoldenRatio ).evalf() ) )
         d6.make_faces()
-        print [face.normal for face in d6.faces]
+        for f in d6.faces:
+            print f.name, f.normal
+        print "a verts", d6.faces[0].vertices
         d6.face_hit( two_point_line( v_x, zero_3d))
         d6.face_hit( two_point_line( -v_x, zero_3d))
         d6.face_hit( two_point_line( v_y, zero_3d))

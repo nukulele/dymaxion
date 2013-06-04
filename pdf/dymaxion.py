@@ -26,7 +26,7 @@ c.line( sx(5), sy(2 * th), sx(4), sy(0) )
 c.line( sx(5.5), sy(th), sx(5), sy(0) )
 c.line( sx(0), sy(2 * th), sx(5), sy( 2*th) )
 c.line( sx(0.5), sy(th), sx(5.5), sy(th) )
-c.drawString( 36, 36, "projection of a sphere onto an unfolded icosahedron by nukulele / 2013 / karmic rights reserved" )
+c.drawString( 36, 36, "stereographic projection of a sphere onto an unfolded icosahedron by nukulele / 2013 / karmic rights reserved" )
 
 c.showPage()
 c.save()
