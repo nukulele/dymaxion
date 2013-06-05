@@ -20,15 +20,16 @@ class face_mappings( object ):
             return None
         face = self.face_dict[ face_name ]
         new_point = point.multiply( face[0] )
-        return ( new_point[0] + face[1], -new_point[1] + face[2] )
+        return ( new_point[0] + face[1], new_point[1] + face[2] )
                 
 def _icosahedron_mapping( ):
 
     th = (s.sqrt(3)/2).evalf()
         
     ret_dict = dict()
-    ret_dict['a'] = ( rot_x( s.pi/2 ), 0.5, (th*7)/3 )
-    ret_dict['e'] = ( rot_x( 0 ), 0.5, (th*5)/3 )
+    ret_dict['a'] = ( rot_x( -s.pi/2 ), 0.5, (th*7)/3 )
+    ret_dict['e'] = ( rot_x( -0.841068670567930 ), 0.5, (th*5)/3 )
+    ret_dict['o'] = ( rot_y( 2*s.pi/5 ).multiply( rot_x( -0.841068670567930 ) ), 1.5, (th*5)/3 )
     return ret_dict
     
     
