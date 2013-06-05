@@ -52,7 +52,8 @@ def make_map( filename ):
     #_map_point( vector_3d( 0, 0.645497224367903, 0.577350269189626 ) )
     
     sr3 = s.sqrt(3).evalf()
-                    
+    
+    c.setLineWidth( 0.25 )                
     c.line( sx( 0 ), sy( sr3 ), sx( 1 ), sy( sr3 ) )
     c.line( sx( 1 ), sy( sr3 ), sx( 0.5 ), sy( sr3 * 1.5 ) )
     c.line( sx( 0.5 ), sy( sr3 * 1.5 ), sx( 0 ), sy( sr3 ) )

@@ -29,7 +29,10 @@ def _icosahedron_mapping( ):
     ret_dict = dict()
     ret_dict['a'] = ( rot_x( -s.pi/2 ), 0.5, (th*7)/3 )
     ret_dict['e'] = ( rot_x( -0.841068670567930 ), 0.5, (th*5)/3 )
-    ret_dict['o'] = ( rot_y( 2*s.pi/5 ).multiply( rot_x( -0.841068670567930 ) ), 1.5, (th*5)/3 )
+    # three fakes
+    # ret_dict['j'] = ( rot_x( -0.841068670567930 ), 0.5, (th*5)/3 )
+    # ret_dict['o'] = ( rot_x( -0.841068670567930 ), 0.5, (th*5)/3 )
+    # ret_dict['f'] = ( rot_x( -0.841068670567930 ), 0.5, (th*5)/3 )
     return ret_dict
     
     
