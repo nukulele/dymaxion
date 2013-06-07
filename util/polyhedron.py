@@ -48,7 +48,7 @@ class Tetrahedron( Hedron ):
     def make_faces( self ):
         self.faces = (
             Polygon( ( self.vertices[0], self.vertices[1], self.vertices[2]), name="a" ),
-            Polygon( ( self.vertices[3], self.vertices[0], self.vertices[2]), name="b"),
+            Polygon( ( self.vertices[3], self.vertices[0], self.vertices[2]), name="b" ),
             Polygon( ( self.vertices[3], self.vertices[1], self.vertices[0]), name="c" ),
             Polygon( ( self.vertices[2], self.vertices[1], self.vertices[3]), name="d" ),
         )            
