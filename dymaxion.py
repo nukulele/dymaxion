@@ -21,13 +21,22 @@ def make_map( filename ):
             mapped_point = mappings.map_point( hit[0], hit[1] )
             if mapped_point:
                 new_x, new_y = mapped_point
-                c.circle( sx(new_x), sy(new_y), 1, stroke=0, fill=1  )
+                c.circle( sx(new_x), sy(new_y), 0.5, stroke=0, fill=1  )
 
     def _sphere_to_cart( theta, phi ):
         return vector_3d( \
             s.sin( theta ) * s.cos( phi ), \
             s.cos( theta ), \
             s.sin( theta ) * s.sin( phi ) )
+            
+    def _arc_azimuth( start_az, end_az, inclin, step ):
+        for azimuth in range( start_az, end_az, step ):
+            _map_point( _sphere_to_cart( to_rad( inclin ).evalf(), to_rad(azimuth).evalf() ))
+    
+    def _arc_inclin(  start_inc, end_inc, azimuth, step ):
+        for inclin in range( start_inc, end_inc, step ):
+            _map_point( _sphere_to_cart( to_rad( inclin ).evalf(), to_rad(azimuth).evalf() ))
+        
             
     # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
     # main
@@ -44,18 +53,12 @@ def make_map( filename ):
     
     c.setFillColorRGB( .5,.5, 1 )
     
-    for inclin in range( 0, 180, 2 ):
-        for azimuth in range( 0, 360, 2 ):
-            point = _sphere_to_cart( to_rad( inclin ).evalf(), to_rad(azimuth).evalf() )
-            _map_point( point )
+    for azimuth in range( 0, 360, 5 ):
+         _arc_inclin( 20, 161, azimuth, 1 )
     
-    #  sr3 = s.sqrt(3).evalf()
+    for inclin in range( 20, 161, 5 ):
+        _arc_azimuth( 0, 360, inclin, 1 )
     
-    # c.setLineWidth( 0.25 )                
-    # c.line( sx( 2.5 ), sy( sr3/2 ), sx( 3 ), sy( 0 ) )
-    # c.line( sx( 3 ), sy( 0 ), sx( 3.5 ), sy( sr3/2 ) )
-    # c.line( sx( 2.5 ), sy( sr3/2 ), sx( 3.5 ), sy( sr3/2 ) )
-
 
     c.showPage()
     c.save()
