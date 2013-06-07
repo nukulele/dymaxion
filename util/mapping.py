@@ -37,29 +37,30 @@ def _icosahedron_mapping( ):
         
     ret_dict = dict()
     
-    maladjust_q = -.454790578009723
-    maladjust_r = .27
-    
     ret_dict['a'] = ( _make_rot_matrix( 0, -s.pi/2 ), 0.5, (th*7)/3 )
     ret_dict['e'] = ( _make_rot_matrix( 0, -0.841068670567930 ), 0.5, (th*5)/3 )
-    ret_dict['j'] = ( _make_rot_matrix( s.pi/5, maladjust_q ), 1, (th*4)/3 )
-    ret_dict['n'] = ( _make_rot_matrix( s.pi/5, maladjust_r ), 1, (th*2)/3 )
     ret_dict['f'] = ( _make_rot_matrix( 2*s.pi/5, -s.pi/2 ), 1.5, (th*7)/3 )
     ret_dict['o'] = ( _make_rot_matrix( 2*s.pi/5, -0.841068670567930 ), 1.5, (th*5)/3 )
-    ret_dict['t'] = ( _make_rot_matrix( 3*s.pi/5, maladjust_q ), 2, (th*4)/3 )
-    ret_dict['s'] = ( _make_rot_matrix( 3*s.pi/5, maladjust_r ), 2, (th*2)/3 )
     ret_dict['k'] = ( _make_rot_matrix( 4*s.pi/5, -s.pi/2 ), 2.5, (th*7)/3 )
     ret_dict['p'] = ( _make_rot_matrix( 4*s.pi/5, -0.841068670567930 ), 2.5, (th*5)/3 )
-    ret_dict['q'] = ( _make_rot_matrix( s.pi, maladjust_q ), 3, (th*4)/3 )
-    ret_dict['r'] = ( _make_rot_matrix( s.pi, maladjust_r ), 3, (th*2)/3 )
     ret_dict['g'] = ( _make_rot_matrix( 6*s.pi/5, -s.pi/2 ), 3.5, (th*7)/3 )
     ret_dict['l'] = ( _make_rot_matrix( 6*s.pi/5, -0.841068670567930 ), 3.5, (th*5)/3 )
-    ret_dict['h'] = ( _make_rot_matrix( 7*s.pi/5, maladjust_q ), 4, (th*4)/3 )
-    ret_dict['m'] = ( _make_rot_matrix( 7*s.pi/5, maladjust_r ), 4, (th*2)/3 )
     ret_dict['b'] = ( _make_rot_matrix( 8*s.pi/5, -s.pi/2 ), 4.5, (th*7)/3 )
     ret_dict['c'] = ( _make_rot_matrix( 8*s.pi/5, -0.841068670567930 ), 4.5, (th*5)/3 )
-    ret_dict['d'] = ( _make_rot_matrix( 9*s.pi/5, maladjust_q ), 5, (th*4)/3 )
-    ret_dict['i'] = ( _make_rot_matrix( 9*s.pi/5, maladjust_r ), 5, (th*2)/3 )
+    
+    flip_y = rot_y( s.pi )
+    
+    ret_dict['j'] = ( ret_dict['l'][0].multiply( flip_y ), 1, (th*4)/3 )
+    ret_dict['n'] = ( ret_dict['g'][0].multiply( flip_y ), 1, (th*2)/3 )
+    ret_dict['t'] = ( ret_dict['c'][0].multiply( flip_y ), 2, (th*4)/3 )
+    ret_dict['s'] = ( ret_dict['b'][0].multiply( flip_y ), 2, (th*2)/3 )
+    ret_dict['q'] = ( ret_dict['e'][0].multiply( flip_y ), 3, (th*4)/3 )
+    ret_dict['r'] = ( ret_dict['a'][0].multiply( flip_y ), 3, (th*2)/3 )
+    ret_dict['h'] = ( ret_dict['o'][0].multiply( flip_y ), 4, (th*4)/3 )
+    ret_dict['m'] = ( ret_dict['f'][0].multiply( flip_y ), 4, (th*2)/3 )
+    ret_dict['d'] = ( ret_dict['p'][0].multiply( flip_y ), 5, (th*4)/3 )
+    ret_dict['i'] = ( ret_dict['k'][0].multiply( flip_y ), 5, (th*2)/3 )
+    
     return ret_dict
     
     

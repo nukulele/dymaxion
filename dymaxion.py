@@ -21,7 +21,7 @@ def make_map( filename ):
             mapped_point = mappings.map_point( hit[0], hit[1] )
             if mapped_point:
                 new_x, new_y = mapped_point
-                c.circle( sx(new_x), sy(new_y), .5, stroke=0, fill=1  )
+                c.circle( sx(new_x), sy(new_y), 1.5, stroke=0, fill=1  )
 
     def _sphere_to_cart( theta, phi ):
         return vector_3d( \
@@ -44,9 +44,9 @@ def make_map( filename ):
     
     c.setFillColorRGB( .5,.5, 1 )
     
-    for inc_percent in range( 0, 180, 2 ):
-        for az_percent in range( 0, 360, 2 ):
-            point = _sphere_to_cart( inc_percent * inc_factor, az_percent * az_factor )
+    for inclin in range( 0, 180, 10 ):
+        for azimuth in range( 0, 360, 10 ):
+            point = _sphere_to_cart( to_rad( inclin ).evalf(), to_rad(azimuth).evalf() )
             _map_point( point )
     
     sr3 = s.sqrt(3).evalf()

@@ -48,7 +48,7 @@ def rot_z( angle ):
 # shortcut for making 3D vectors
 
 def vector_3d( x, y, z ):
-    return Matrix( (x,y,z) ).transpose()
+    return Matrix( [[x,y,z]] )
     
 zero_3d = vector_3d( 0,0,0 )
 v_x = vector_3d( 1,0,0 )
