@@ -24,7 +24,6 @@ class face_mappings( object ):
                 
 def _icosahedron_mapping( ):
 
-    axis_skew = (s.pi/2 - s.atan2( s.GoldenRatio-1, s.GoldenRatio ) - s.atan2( 1, s.GoldenRatio )).evalf()
 
     def _make_rot_matrix( pole_angle, long_angle ):
         ret_matrix = rot_x( -axis_skew ) 
@@ -33,20 +32,23 @@ def _icosahedron_mapping( ):
         
         return ret_matrix.evalf()
 
-    th = (s.sqrt(3)/2).evalf()
-        
+    # some magic constants
+    axis_skew = (s.pi/2 - s.atan2( s.GoldenRatio-1, s.GoldenRatio ) - s.atan2( 1, s.GoldenRatio )).evalf()
+    th = (s.sqrt(3)/2).evalf()        
+    face_angle = s.atan( s.sqrt( 5 )/2 ).evalf()
+
     ret_dict = dict()
     
     ret_dict['a'] = ( _make_rot_matrix( 0, -s.pi/2 ), 0.5, (th*7)/3 )
-    ret_dict['e'] = ( _make_rot_matrix( 0, -0.841068670567930 ), 0.5, (th*5)/3 )
+    ret_dict['e'] = ( _make_rot_matrix( 0, -face_angle ), 0.5, (th*5)/3 )
     ret_dict['f'] = ( _make_rot_matrix( 2*s.pi/5, -s.pi/2 ), 1.5, (th*7)/3 )
-    ret_dict['o'] = ( _make_rot_matrix( 2*s.pi/5, -0.841068670567930 ), 1.5, (th*5)/3 )
+    ret_dict['o'] = ( _make_rot_matrix( 2*s.pi/5, -face_angle ), 1.5, (th*5)/3 )
     ret_dict['k'] = ( _make_rot_matrix( 4*s.pi/5, -s.pi/2 ), 2.5, (th*7)/3 )
-    ret_dict['p'] = ( _make_rot_matrix( 4*s.pi/5, -0.841068670567930 ), 2.5, (th*5)/3 )
+    ret_dict['p'] = ( _make_rot_matrix( 4*s.pi/5, -face_angle ), 2.5, (th*5)/3 )
     ret_dict['g'] = ( _make_rot_matrix( 6*s.pi/5, -s.pi/2 ), 3.5, (th*7)/3 )
-    ret_dict['l'] = ( _make_rot_matrix( 6*s.pi/5, -0.841068670567930 ), 3.5, (th*5)/3 )
+    ret_dict['l'] = ( _make_rot_matrix( 6*s.pi/5, -face_angle ), 3.5, (th*5)/3 )
     ret_dict['b'] = ( _make_rot_matrix( 8*s.pi/5, -s.pi/2 ), 4.5, (th*7)/3 )
-    ret_dict['c'] = ( _make_rot_matrix( 8*s.pi/5, -0.841068670567930 ), 4.5, (th*5)/3 )
+    ret_dict['c'] = ( _make_rot_matrix( 8*s.pi/5, -face_angle ), 4.5, (th*5)/3 )
     
     flip_y = rot_y( s.pi )
     
