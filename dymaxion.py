@@ -44,21 +44,19 @@ def make_map( filename ):
     
     c.setFillColorRGB( .5,.5, 1 )
     
-    for inc_percent in range( 0, 90, 5 ):
-        for az_percent in range( 0, 360, 5 ):
+    for inc_percent in range( 0, 180, 10):
+        for az_percent in range( 0, 360, 10 ):
             point = _sphere_to_cart( inc_percent * inc_factor, az_percent * az_factor )
             _map_point( point )
     
-    #_map_point( vector_3d( 0, 0.645497224367903, 0.577350269189626 ) )
+    # sr3 = s.sqrt(3).evalf()
     
-    sr3 = s.sqrt(3).evalf()
-    
-    c.setLineWidth( 0.25 )                
-    c.line( sx( 0 ), sy( sr3 ), sx( 1 ), sy( sr3 ) )
-    c.line( sx( 1 ), sy( sr3 ), sx( 0.5 ), sy( sr3 * 1.5 ) )
-    c.line( sx( 0.5 ), sy( sr3 * 1.5 ), sx( 0 ), sy( sr3 ) )
-    c.line( sx( 0 ), sy( sr3 ), sx( 0.5 ), sy( sr3 *.5 ) )
-    c.line( sx( 0.5 ), sy( sr3 *.5 ), sx( 1), sy( sr3 ) )
+    # c.setLineWidth( 0.25 )                
+    # c.line( sx( 0 ), sy( sr3 ), sx( 1 ), sy( sr3 ) )
+    # c.line( sx( 1 ), sy( sr3 ), sx( 0.5 ), sy( sr3 * 1.5 ) )
+    # c.line( sx( 0.5 ), sy( sr3 * 1.5 ), sx( 0 ), sy( sr3 ) )
+    # c.line( sx( 0 ), sy( sr3 ), sx( 0.5 ), sy( sr3 *.5 ) )
+    # c.line( sx( 0.5 ), sy( sr3 *.5 ), sx( 1), sy( sr3 ) )
 
 
     c.showPage()
