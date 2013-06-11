@@ -34,4 +34,11 @@ def get_letter_canvas( filename ):
     return c
     
 
+def draw_hexes( c, hexes = 5 ):
+    '''Presumes we have an equilateral triangle, with origin
+    at centroid and edge length of 1; draws hex grid within it,
+    where hexes determines the number of complete hexagons
+    along the edge.'''
+    
+    pass
     
