@@ -1,6 +1,6 @@
 import sympy as s
 
-from util.pdf import get_letter_canvas
+from util.pdf import get_letter_canvas, draw_hexes
 
 from util.circle import three_point_circle
 
@@ -23,8 +23,16 @@ def make_map( filename ):
     def _draw_longitude_circle( c, longitude ):
         pass
 
+    # set up our triangle
     c = get_letter_canvas( filename )
-        
+
+    # hex grid
+    c.setStrokeColor( (0.75, 0.75, 1) )
+    c.setLineWidth( 0.001 )
+    draw_hexes( c, 2 )
+    c.setLineWidth( 0.0005 )
+    draw_hexes( c, 10 )
+
     c.showPage()
     c.save()
     

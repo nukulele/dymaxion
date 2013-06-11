@@ -36,7 +36,27 @@ def make_map( filename ):
     def _arc_inclin(  start_inc, end_inc, azimuth, step ):
         for inclin in range( start_inc, end_inc, step ):
             _map_point( _sphere_to_cart( to_rad( inclin ).evalf(), to_rad(azimuth).evalf() ))
+            
+    def _plot_skeleton():
+        th = (s.sqrt(3)/2).evalf()
+
+        c.line( sx(0), sy(2 * th) , sx(0.5), sy(3 * th) )
+        c.line( sx(0.5), sy(th) , sx(1.5), sy(3 * th) )
+        c.line( sx(1), sy(0) , sx(2.5), sy(3 * th) )
+        c.line( sx(2), sy(0) , sx(3.5), sy(3 * th) )
+        c.line( sx(3), sy(0) , sx(4.5), sy(3 * th) )
+        c.line( sx(4), sy(0) , sx(5), sy(2 * th) )
+        c.line( sx(5), sy(0) , sx(5.5), sy(th) )
+
+        c.line( sx(0), sy( 2 * th ), sx(1), sy(0) )        
+        c.line( sx(0.5), sy( 3 * th ), sx(2), sy(0) )        
+        c.line( sx(1.5), sy( 3 * th ), sx(3), sy(0) )        
+        c.line( sx(2.5), sy( 3 * th ), sx(4), sy(0) )        
+        c.line( sx(3.5), sy( 3 * th ), sx(5), sy(0) )        
+        c.line( sx(4.5), sy( 3 * th ), sx(5.5), sy( th ) )   
         
+        c.line( sx(0), sy( 2 * th), sx( 5 ), sy( 2*th ) )     
+        c.line( sx(0.5), sy(th), sx( 5.5 ), sy( th ) )     
             
     # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
     # main
@@ -57,8 +77,10 @@ def make_map( filename ):
          _arc_inclin( 20, 161, azimuth, 1 )
     
     for inclin in range( 20, 161, 5 ):
-        _arc_azimuth( 0, 360, inclin, 1 )
+         _arc_azimuth( 0, 360, inclin, 1 )
     
+    c.setStrokeColorRGB( .5,.5, .5 )    
+    _plot_skeleton()
 
     c.showPage()
     c.save()
