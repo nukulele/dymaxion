@@ -1,0 +1,8 @@
+Next round. This time, using the clipping and scaling of PostScript.
+
+The map I generate will be built of equilateral triangles of side length
+1 unit. The full map, unwrapped, will be 5.5 units wide. PostScript will
+do the scaling to the right paper size (tabloid).
+
+The other change is that each face will be built using circles, drawn in
+their entirety but clipped outside the triangle.

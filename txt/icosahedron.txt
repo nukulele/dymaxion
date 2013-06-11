@@ -1,4 +1,8 @@
-vertices
+Vertices
+
+These are the twelve vertices of the icosahedron when the icosahedron is
+oriented the way we want to do our mapping. Face 'a' (=ABC) and 'r'
+(=ILJ) are the polar faces.
 
 A [-0.5, 0.755761314076171, 0.288675134594813]
 B [0.5, 0.755761314076171, 0.288675134594813]
@@ -14,6 +18,10 @@ K [0.809016994374947, -0.178411044886545, 0.467086179481358]
 L [0.5, -0.755761314076171, -0.288675134594813]
 
 Faces
+
+These faces are all described such that their vertices go
+counter-clockwise around the face as seen from the outside. This
+handedness is needed for the face-hit algorithm.
 
 a
 A [-0.5, 0.755761314076171, 0.288675134594813]

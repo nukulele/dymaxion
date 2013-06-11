@@ -24,7 +24,6 @@ class face_mappings( object ):
                 
 def _icosahedron_mapping( ):
 
-
     def _make_rot_matrix( pole_angle, long_angle ):
         ret_matrix = rot_x( -axis_skew ) 
         ret_matrix = ret_matrix.multiply( rot_y( pole_angle ) ).multiply( rot_x( axis_skew ) )
