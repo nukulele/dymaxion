@@ -15,12 +15,15 @@ class face_mappings( object ):
     def __init__( self, poly ):
         self.face_dict = _icosahedron_mapping()
 
-    def map_point( self, face_name, point ):
+    def map_point( self, face_name, point, transform=True ):
         if face_name not in self.face_dict:
             return None
         face = self.face_dict[ face_name ]
         new_point = point.multiply( face[0] )
-        return ( new_point[0] + face[1], new_point[1] + face[2] )
+        if transform:
+            return ( new_point[0] + face[1], new_point[1] + face[2] )    
+        else:
+            return ( new_point[0], new_point[1] )    
                 
 def _icosahedron_mapping( ):
 
