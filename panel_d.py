@@ -48,8 +48,8 @@ def make_map( filename ):
     d20.make_faces()
     mappings = face_mappings( d20 )
 
-    face_plane = d20.faces[10].plane
-    rot_mat = mappings.face_dict['k'][0]
+    face_plane = d20.faces[6].plane
+    rot_mat = mappings.face_dict['g'][0]
  
 #    for lat in range( 10, 170, 1 ):
 #        if lat % 5:
@@ -77,7 +77,7 @@ def make_map( filename ):
  
  
     for lat in range( 25, 110, 5 ):
-        for lon in range( 270, 336, 5 ):
+        for lon in range( 90, 271, 5 ):
             try:
                 point = line_plane_intersect( two_point_line( \
                     _sphere_to_cart( to_rad( lat ), to_rad( lon ) ), zero_3d), face_plane, ray=True )
@@ -90,4 +90,4 @@ def make_map( filename ):
     c.save()
     
 if __name__ == '__main__':
-    make_map( "panel_c.pdf" )        
+    make_map( "panel_d.pdf" )        

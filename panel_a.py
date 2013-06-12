@@ -59,11 +59,11 @@ def make_map( filename ):
 
         lat_rad = to_rad( lat ).evalf()
         try:
-            point = line_plane_intersect( two_point_line( _sphere_to_cart( lat_rad, 0 ), zero_3d ), face_plane )
+            point = line_plane_intersect( two_point_line( zero_3d, _sphere_to_cart( lat_rad, 0 ) ), face_plane )
             mp1 = point.multiply( rot_mat )
-            point = line_plane_intersect( two_point_line( _sphere_to_cart( lat_rad, _pi/2 ), zero_3d ), face_plane )
+            point = line_plane_intersect( two_point_line( zero_3d, _sphere_to_cart( lat_rad, _pi/2 ) ), face_plane )
             mp2 = point.multiply( rot_mat )
-            point = line_plane_intersect( two_point_line( _sphere_to_cart( lat_rad, -_pi/2 ), zero_3d ), face_plane )
+            point = line_plane_intersect( two_point_line( zero_3d, _sphere_to_cart( lat_rad, -_pi/2 ) ), face_plane )
             mp3 = point.multiply( rot_mat )
             
             the_circle = three_point_circle( mp1[0], mp1[1], mp2[0], mp2[1], mp3[0], mp3[1] )
