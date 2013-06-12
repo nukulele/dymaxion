@@ -48,21 +48,21 @@ def make_map( filename ):
     d20.make_faces()
     mappings = face_mappings( d20 )
 
-    face_plane = d20.faces[10].plane
-    rot_mat = mappings.face_dict['k'][0]
+    face_plane = d20.faces[16].plane
+    rot_mat = mappings.face_dict['q'][0]
     
     bag_o_points = dict()
  
-    for lat in range( 25, 110, 1 ):
-        for lon in range( 270, 331, 1 ):
+    for lat in range( 90, 170, 1 ):
+        for lon in range( 210, 331, 1 ):
             point = line_plane_intersect( two_point_line( \
                 _sphere_to_cart( to_rad( lat ).evalf(), to_rad( lon ).evalf() ), zero_3d), face_plane, ray=True )
             mp = point.multiply( rot_mat )
             # c.circle( mp[0],mp[1],0.002,fill=1,stroke=0)
             bag_o_points[(lat,lon)] = mp
                 
-    for lat in range( 25, 109, 1 ):
-        for lon in range( 270, 330, 1 ):
+    for lat in range( 90, 169, 1 ):
+        for lon in range( 210, 330, 1 ):
             p0 = bag_o_points[(lat, lon)]
             p1 = bag_o_points[(lat+1,lon)]
             p2 = bag_o_points[(lat,lon+1)]
@@ -86,4 +86,4 @@ def make_map( filename ):
     c.save()
     
 if __name__ == '__main__':
-    make_map( "panel_c.pdf" )        
+    make_map( "panel_b.pdf" )        

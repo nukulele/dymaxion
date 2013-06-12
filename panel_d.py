@@ -16,11 +16,14 @@ _pi = s.pi.evalf()
 
 def make_map( filename ):
 
-    def _sphere_to_cart( theta, phi ):
-        return vector_3d( \
+    def _sphere_to_cart( theta, phi, numeric = True ):
+        ret_val = vector_3d( \
             s.sin( theta ) * s.cos( phi ), \
             s.cos( theta ), \
             s.sin( theta ) * s.sin( phi ) )
+        if numeric:
+            ret_val = ret_val.evalf()
+        return ret_val
 
     def _draw_this_circle( c, Circle ):
         pass
@@ -33,7 +36,7 @@ def make_map( filename ):
 
 
     # set up our triangle
-    c = get_letter_canvas( filename, clip=False )
+    c = get_letter_canvas( filename )
 
     # hex grid
     c.setStrokeColor( (0.75, 0.75, 1) )
@@ -50,41 +53,36 @@ def make_map( filename ):
 
     face_plane = d20.faces[6].plane
     rot_mat = mappings.face_dict['g'][0]
+  
+    bag_o_points = dict()
+    
+    for lat in range( 35, 110, 1 ):
+        for lon in range( 210, 271, 1 ):
+            point = line_plane_intersect( two_point_line( \
+                _sphere_to_cart( to_rad( lat ).evalf(), to_rad( lon ).evalf() ), zero_3d), face_plane, ray=True )
+            mp = point.multiply( rot_mat )
+            # c.circle( mp[0],mp[1],0.002,fill=1,stroke=0)
+            bag_o_points[(lat,lon)] = mp
  
-#    for lat in range( 10, 170, 1 ):
-#        if lat % 5:
-#            c.setLineWidth( 0.0005 )
-#        else:
-#            c.setLineWidth( 0.001 )
-#
-#        lat_rad = to_rad( lat ).evalf()
-#        try:
-#            point = line_plane_intersect( two_point_line( zero_3d, _sphere_to_cart( lat_rad, _pi/3 ) ), face_plane, ray=True )
-#            mp1 = point.multiply( rot_mat )
-#            point = line_plane_intersect( two_point_line( zero_3d, _sphere_to_cart( lat_rad, 0) ), face_plane, ray=True )
-#            mp2 = point.multiply( rot_mat )
-#            point = line_plane_intersect( two_point_line( zero_3d, _sphere_to_cart( lat_rad, 2*_pi/3 ) ), face_plane, ray=True )
-#            mp3 = point.multiply( rot_mat )
-#            
-#            # c.circle( mp2[0],mp2[1],0.002,fill=1,stroke=0)
-#            
-#            the_circle = three_point_circle( mp1[0], mp1[1], mp2[0], mp2[1], mp3[0], mp3[1] )
-#            
-#            c.circle( the_circle.x0, the_circle.y0, the_circle.radius, fill=0, stroke=1 )
-#           
-#        except:
-#            pass
- 
- 
-    for lat in range( 25, 110, 5 ):
-        for lon in range( 90, 271, 5 ):
-            try:
-                point = line_plane_intersect( two_point_line( \
-                    _sphere_to_cart( to_rad( lat ), to_rad( lon ) ), zero_3d), face_plane, ray=True )
-                mp = point.multiply( rot_mat )
-                c.circle( mp[0],mp[1],0.002,fill=1,stroke=0)
-            except:
-                pass
+    for lat in range( 35, 109, 1 ):
+        for lon in range( 210, 270, 1 ):
+            p0 = bag_o_points[(lat, lon)]
+            p1 = bag_o_points[(lat+1,lon)]
+            p2 = bag_o_points[(lat,lon+1)]
+            
+            if lon % 5:
+                c.setLineWidth( 0.0005 )
+            else:
+                c.setLineWidth( 0.001 )
+            
+            c.line( p0[0],p0[1],p1[0],p1[1] )
+            
+            if lat % 5:
+                c.setLineWidth( 0.0005 )
+            else:
+                c.setLineWidth( 0.001 )
+                
+            c.line( p0[0],p0[1],p2[0],p2[1] )
 
     c.showPage()
     c.save()
