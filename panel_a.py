@@ -51,7 +51,7 @@ def make_map( filename ):
     face_plane = d20.faces[0].plane
     rot_mat = mappings.face_dict['a'][0]
  
-    for lat in range( 0, 40, 1 ):
+    for lat in range( 0, 40, 5 ):
         if lat % 5:
             c.setLineWidth( 0.0005 )
         else:
@@ -72,7 +72,7 @@ def make_map( filename ):
         except:
             pass
   
-    for lon in range( 0, 360, 1 ):
+    for lon in range( 0, 360, 5 ):
     
         if lon % 5:
             c.setLineWidth( 0.0005 )

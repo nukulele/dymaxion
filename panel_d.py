@@ -56,19 +56,19 @@ def make_map( filename ):
   
     bag_o_points = dict()
     
-    for lat in range( 35, 110, 1 ):
-        for lon in range( 210, 271, 1 ):
+    for lat in range( 35, 111, 5 ):
+        for lon in range( 210, 271, 5 ):
             point = line_plane_intersect( two_point_line( \
                 _sphere_to_cart( to_rad( lat ).evalf(), to_rad( lon ).evalf() ), zero_3d), face_plane, ray=True )
             mp = point.multiply( rot_mat )
             # c.circle( mp[0],mp[1],0.002,fill=1,stroke=0)
             bag_o_points[(lat,lon)] = mp
  
-    for lat in range( 35, 109, 1 ):
-        for lon in range( 210, 270, 1 ):
+    for lat in range( 35, 109, 5 ):
+        for lon in range( 210, 270, 5 ):
             p0 = bag_o_points[(lat, lon)]
-            p1 = bag_o_points[(lat+1,lon)]
-            p2 = bag_o_points[(lat,lon+1)]
+            p1 = bag_o_points[(lat+5,lon)]
+            p2 = bag_o_points[(lat,lon+5)]
             
             if lon % 5:
                 c.setLineWidth( 0.0005 )
